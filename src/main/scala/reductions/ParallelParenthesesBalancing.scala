@@ -41,45 +41,40 @@ object ParallelParenthesesBalancing {
   /** Returns `true` iff the parentheses in the input `chars` are balanced.
     */
   def balance(chars: Array[Char]): Boolean = {
-    def balAcc(chars: Array[Char], toBal: List[Char]): List[Char] = {
-      chars.toList match {
-        case Nil => toBal
-        case he :: ta => he match {
-          case c: Char if c == '(' => balAcc(ta.toArray, c :: toBal)
-          case c: Char if c == ')' =>
-            val toBalP = if (toBal.nonEmpty && toBal.head == '(') toBal.tail else c :: toBal
-            balAcc(ta.toArray, toBalP)
-          case _ => balAcc(ta.toArray, toBal)
-        }
-      }
-    }
 
-    if (chars.isEmpty) true else balAcc(chars, Nil).isEmpty
+    var i = 0
+    var res = 0
+    var sub0Det = 0
+    while (i < chars.length) {
+      chars(i) match {
+        case c: Char if c == '(' => res = res + 1
+        case c: Char if c == ')' => res = res - 1
+        case _ =>
+      }
+      i = i + 1
+      if (res < 0) sub0Det = sub0Det - 1
+    }
+    res == 0 && !(sub0Det < 0)
+
   }
 
   /** Returns `true` iff the parentheses in the input `chars` are balanced.
     */
   def parBalance(chars: Array[Char], threshold: Int): Boolean = {
 
-    def traverse(from: Int, until: Int, arg1: Int, arg2: Int): (Int, Int) = {
+    def traverse(from: Int, until: Int, arg0: Int, arg1: Int): (Int, Int) = {
 
-      def balAcc(charsC: Array[Char], toBal: List[Char]): List[Char] = {
-        charsC.toList match {
-          case Nil => toBal
-          case he :: ta => he match {
-            case c: Char if c == '(' => balAcc(ta.toArray, c :: toBal)
-            case c: Char if c == ')' =>
-              val toBalP = if (toBal.nonEmpty && toBal.head == '(') toBal.tail else c :: toBal
-              balAcc(ta.toArray, toBalP)
-            case _ => balAcc(ta.toArray, toBal)
-          }
-        }
-      }
-
-      var lP = 0
       var rP = 0
-      val unbalancedPars = balAcc(chars.slice(from, until), Nil)
-      unbalancedPars.foldLeft()((a,b) => if (b == '(') lP = lP + 1 else rP = rP + 1)
+      var lP = 0
+      var i = from
+      while (i < until) {
+        chars(i) match {
+          case c: Char if c == '(' => lP = lP + 1
+          case c: Char if c == ')' => if (lP > 0) lP = lP - 1 else rP = rP + 1
+          case _ =>
+        }
+        i = i + 1
+      }
 
       lP -> rP
     }
