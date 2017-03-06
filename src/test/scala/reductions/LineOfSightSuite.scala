@@ -70,25 +70,6 @@ class LineOfSightSuite extends FunSuite {
     assert(output.toList == List(0.0, 7.0, 7.0, 11.0, 12.0))
   }
 
-  test("par line of sight") {
-    val length = 5
-    //    val input = (0 until length).map(_ % 100 * 1.0f).toArray
-    val input = Array[Float](0f, 1f, 16f, 33f, 48f)
-    println(input.toList)
-    val output = new Array[Float](length + 1)
-    val sight = LineOfSight.parLineOfSight(input, output, 2)
-    println(output.toList)
-  }
-
-
-  test("par line of sight 2") {
-    val length = 4
-    val input = Array[Float](0f, 1f, 8f, 9f)
-    println(input.toList)
-    val output = new Array[Float](length + 1)
-    val sight = LineOfSight.parLineOfSight(input, output, 2)
-    println(output.toList)
-  }
 
 }
 

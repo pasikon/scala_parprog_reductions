@@ -64,5 +64,9 @@ class ParallelParenthesesBalancingSuite extends FunSuite {
     check(").", false)
   }
 
+  test("pb 2 1") {
+    parBalance("()".toArray, 1)
+  }
+
 
 }
