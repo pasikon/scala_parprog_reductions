@@ -34,7 +34,16 @@ object LineOfSight {
   def max(a: Float, b: Float): Float = if (a > b) a else b
 
   def lineOfSight(input: Array[Float], output: Array[Float]): Unit = {
-    ???
+    var max = Float.MinValue
+    for {
+      i <- input.indices
+    } yield {
+      if (i == 0) output(i) = 0 else {
+        val curr = input(i) / i
+        if (curr > max) max = curr
+        output(i) = max
+      }
+    }
   }
 
   sealed abstract class Tree {
@@ -50,7 +59,14 @@ object LineOfSight {
   /** Traverses the specified part of the array and returns the maximum angle.
    */
   def upsweepSequential(input: Array[Float], from: Int, until: Int): Float = {
-    ???
+    var max = Float.MinValue
+    for {
+      i <- from until until
+    } yield {
+      val curr = input(i) / i
+      if (curr > max) max = curr
+    }
+    max
   }
 
   /** Traverses the part of the array starting at `from` and until `end`, and
@@ -63,7 +79,13 @@ object LineOfSight {
    */
   def upsweep(input: Array[Float], from: Int, end: Int,
     threshold: Int): Tree = {
-    ???
+    if (end - from < threshold) {
+      Leaf(from, end, upsweepSequential(input, from, end))
+    } else {
+      val mid: Int = from + (end - from) / 2
+      val parNodes = parallel(upsweep(input, from, mid, threshold), upsweep(input, mid, end, threshold))
+      Node(parNodes._1, parNodes._2)
+    }
   }
 
   /** Traverses the part of the `input` array starting at `from` and until
