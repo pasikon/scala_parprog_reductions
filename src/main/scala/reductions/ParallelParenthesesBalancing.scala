@@ -86,7 +86,7 @@ object ParallelParenthesesBalancing {
       } else {
         val mid: Int = from + (until - from) / 2
         val parallel1: ((Int, Int), (Int, Int)) = parallel(reduce(from, mid), reduce(mid, until))
-        val tuple = (parallel1._1._1 - parallel1._2._2 + parallel1._2._1) -> (parallel1._1._2 + parallel1._2._2 - parallel1._1._1)
+        val tuple = math.max(0, parallel1._1._1 - parallel1._2._2 + parallel1._2._1) -> math.max(0, parallel1._1._2 + parallel1._2._2 - parallel1._1._1)
         tuple
       }
 

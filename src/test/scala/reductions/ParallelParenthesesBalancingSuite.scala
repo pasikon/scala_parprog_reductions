@@ -53,6 +53,7 @@ class ParallelParenthesesBalancingSuite extends FunSuite {
     check("(())", true)
     check("(())ijoijoijoji(((())))", true)
     check("(())ijoijoijoji(((())))", true)
+    check("(())ijoijoijoji(((()))()", false)
     check("()))))))))))))(((((((((((()))))))))))((((((((((()))))))))(((((((((((())))))))))((((" +
       "(((((())))))))))(((((((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))))))", false)
     check(")(", false)
